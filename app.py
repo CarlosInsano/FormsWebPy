@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
+import pyautogui
+import time
 
 # Função para criar o banco de dados e tabela
 def init_db():
@@ -50,8 +52,36 @@ def excluir_registro(id):
     conn.commit()
     conn.close()
 
+# Função para Automação para dar um ping
+def abrir_cmd():
+    # Aguardar alguns segundos para ter tempo de preparar a janela
+    time.sleep(1)
+    # Pressionar as teclas 'Win' + 'R'
+    pyautogui.hotkey('win', 'r')
+    # Aguardar alguns segundos para ter tempo de preparar a janela
+    time.sleep(1)
+    pyautogui.write("CMD")
+    # Aguardar alguns segundos para ter tempo de preparar a janela
+    time.sleep(1)
+    pyautogui.hotkey('enter')
+    # Aguardar alguns segundos para ter tempo de preparar a janela
+    time.sleep(1)
+    pyautogui.hotkey('win','right')
+    pyautogui.hotkey('alt','tab')
+    pyautogui.write('color a')
+    time.sleep(1)
+    pyautogui.hotkey('enter')
+    pyautogui.sleep(1)
+    pyautogui.write('ping 8.8.8.8 -t')
+    time.sleep(1)
+    pyautogui.hotkey('enter')
+    
+
 # Inicializar o banco de dados
 init_db()
+
+if st.button('Verificar Conexão'):
+    abrir_cmd()
 
 # Título do aplicativo
 st.title("Gerenciamento de Dados com Streamlit e SQLite - CRUD")
@@ -107,3 +137,7 @@ if dados:
                 st.rerun()
 else:
     st.info("Nenhum registro encontrado!")
+
+
+
+
